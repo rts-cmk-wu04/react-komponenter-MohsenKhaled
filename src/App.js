@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from "react";
+import Kort from "./components/Kort";
 
 function App() {
+  var [ kortContent, setKortContent ] = useState([]);
+
+  useEffect(function(){
+    fetch("./kort.json")
+    .then(function(reponse){
+      return reponse.json();
+    })
+    .then(function(data){
+      setKortContent(data);
+    });
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {kortContent.map(kort => <Kort image={kort.image}/>)}
+    </>
   );
 }
 
